@@ -75,8 +75,9 @@ EOF
 ## Loop through each code file
 eval $SEARCH_STRING | sort | sed 's/^\..//' |
 while read  i; do
+  NAME=$(echo $i | sed 's/\_/\\_/g')                        # This properly escapes filenames with underscores
   echo "\newpage" >> $tex_file                              ## Start each section on a new page
-  echo "\section{$i}" >> $tex_file                          ## Create a section for each file                  
+  echo "\section{$NAME}" >> $tex_file                       ## Create a section for each file                  
   echo "\lstinputlisting[style=customasm]{$i}" >> $tex_file ## This command will include the file in the PDF
 done && 
 echo "\end{document}" >> $tex_file &&
