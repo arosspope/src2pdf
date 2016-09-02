@@ -21,13 +21,15 @@ LANG=$3
 ## Perform a language check and initialise the search string
 if [ "$LANG" == "C" ]
 then
-  SEARCH_STRING="find . -name \*.c -o -name \*.h"
+  SEARCH_ALL="find . -type f \( -iname '*.c' ! -iname 'main.c' -o -iname '*.h' \)"
+  SEARCH_MAIN="find . -type f \( -iname 'main.c' \)"
 elif [ "$LANG" == "Python" ]
 then  
-  SEARCH_STRING="find . -name \*.py"
+  SEARCH_ALL="find . -name \*.py"
 elif [ "$LANG" == "C++" ]
 then
-  SEARCH_STRING="find . -name \*.h -o -name \*.cpp"
+  SEARCH_ALL="find . -type f \( -iname '*.cpp' ! -iname 'main.cpp' -o -iname '*.h' \)"
+  SEARCH_MAIN="find . -type f \( -name 'main.cpp' \)"
 else
   echo "Error.. $LANG is an unsupported language"
   exit 1
@@ -51,7 +53,7 @@ cat << EOF > $tex_file
 \lstdefinestyle{customasm}{
   belowcaptionskip=1\baselineskip,
   xleftmargin=\parindent,
-  language=$LANG,                       %% Change this to whatever you write in
+  language=$LANG,                       
   breaklines=true,                      %% Wrap long lines
   basicstyle=\footnotesize\ttfamily,
   commentstyle=\itshape\color{Gray},
@@ -72,15 +74,31 @@ cat << EOF > $tex_file
 EOF
 ## End Tex Setup
 
+function printSrcToPdf {
+  NAME=$(echo $1 | sed 's/\_/\\_/g')                        # Escape filename with underscores
+  echo "\newpage" >> $tex_file                              # Start each section on a new page
+  echo "\section{$NAME}" >> $tex_file                       # Create a section for each file                  
+  echo "\lstinputlisting[style=customasm]{$1}" >> $tex_file # Print the file to the PDF
+}
+
+
+# If the language is either C or C++, usually these projects contain a 'main' file. It would make
+# sense if this file was the first file printed to the pdf.
+if [ "$LANG" == "C" ] || [ "$LANG" == "C++" ]
+then
+  eval $SEARCH_MAIN | sed 's/^\..//' | 
+  while read i; do
+    printSrcToPdf $i
+  done
+fi
+
 ## Loop through each code file
-eval $SEARCH_STRING | sort | sed 's/^\..//' |
+eval $SEARCH_ALL | sort | sed 's/^\..//' |
 while read  i; do
-  NAME=$(echo $i | sed 's/\_/\\_/g')                        # This properly escapes filenames with underscores
-  echo "\newpage" >> $tex_file                              ## Start each section on a new page
-  echo "\section{$NAME}" >> $tex_file                       ## Create a section for each file                  
-  echo "\lstinputlisting[style=customasm]{$i}" >> $tex_file ## This command will include the file in the PDF
+  printSrcToPdf $i
 done && 
 echo "\end{document}" >> $tex_file &&
+
 ## This needs to be run twice for the TOC to be generated
 pdflatex -output-directory=$COMPILE_DIR $tex_file && 
 pdflatex -output-directory=$COMPILE_DIR $tex_file 
