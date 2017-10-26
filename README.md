@@ -14,6 +14,10 @@ Well look no further, `src2pdf` is here to put your troubled mind at ease! Using
 ![1](https://i.imgur.com/T4QiEX5m.png) ![2](https://i.imgur.com/YDpsWm9m.png)
 > _Show how fancy you are with a title page, table of contents, and syntax highlighting based on source language_
 
+### How is this script different?
+
+Honestly, this script is not that different to the others out there. However, this implementation does allow you to customise a **title**, **subtitle**, **author**, and source **language**. If this script gains popularity, I might put in _extra features_ such as _fancier_ title pages.
+
 ## Installation
 ### Required packages
 
@@ -34,13 +38,13 @@ $ chomd +x /usr/local/bin/src2pdf.sh
 ## Operation
 
 Naviagte to your project directory and run the following (assuming the script is on the `$PATH`):
-```bash
+```
 arosspope@(project) $ src2pdf
 ```
 You will then be prompted with a series of questions to generate and customise the pdf. Here is an example of the script running:
 
 
-```bash
+```
 $ Title (blank to use prm_sim) : PRM Simulator
 $ Author (blank for nothing) : arosspope
 $ Subtitle (blank for nothing) : A Probabilistic RoadMap (PRM) simulator in ROS
