@@ -32,12 +32,12 @@ More generally, this script will require the following packages to be installed:
 After installing the required packages, the script should work out-of-the-box after making it executable. Personally, I like to put the script somewhere where it can be easily found on `$PATH` (such as `/usr/local/bin`).
 
 ```bash
-$ chomd +x /usr/local/bin/src2pdf.sh
+$ chmod +x /usr/local/bin/src2pdf.sh
 ```
 
 ## Operation
 
-Naviagte to your project directory and run the following (assuming the script is on the `$PATH`):
+Navigate to your project directory and run the following (assuming the script is on the `$PATH`):
 ```
 arosspope@(project) $ src2pdf
 ```
