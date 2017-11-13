@@ -137,7 +137,7 @@ unset IFS
 ###############
 
 ## TODO: This doesn't make much sense for other languages
-read -p "Re-order files to place header files in front of source files? (y/n) : " answer
+read -p "Re-order files to place header files in front of source files? (Y/n) : " answer
 
 if [[ ! $answer == "n" ]] && [[ ! $answer == "N" ]] ; then
     echo "  Re-ordering files."
@@ -171,7 +171,7 @@ unset IFS
 
 ###############
 
-read -p "Review files found? (y/n) : " answer
+read -p "Review files found? (y/N) : " answer
 
 if [[ $answer == "y" ]] || [[ $answer == "Y" ]] ; then
 
