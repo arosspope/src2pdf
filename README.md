@@ -62,7 +62,7 @@ Done, output file is 'PRM Simulator.pdf' in this directory
 ```
 Please note that _special characters_ `#%$_^&}{)(` within the title, subtitle and/or author positions **must be escaped**, or the script will fail to run.
 
-Currently, the supported languages are specified by the LaTeX [source code listings](http://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings) page.
+Currently, the supported languages are specified by the LaTeX [source code listings](http://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings) page. They include (but are not limited to) `C++`, `C`, `C#`,  `Java`, `Matlab`, `Python`, `R`, `SQL` and `HTML`.
 
 ## Acknowledgements
 
